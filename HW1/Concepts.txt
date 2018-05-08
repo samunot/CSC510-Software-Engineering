@@ -1,0 +1,40 @@
+Concerns related to REST API:
+1.	Different interpretation of REST API – HTTP methods and response codes don’t have fixed meanings.
+    It is too vague and incomplete to decide on meanings. There is no governing body that has fixed the meaning, 
+    so some company might have different meaning for status code 200 while other might have something else. 
+    Essentially it is not as predictable as it should be.
+2.	REST vocabulary is not fully supported – Even after agreeing on some meanings, there is a huge problem of
+    support of these methods. Like PUT and DELETE is not supported in some browsers while some methods are not
+    supported on server applications. Response codes aren’t handled properly as some codes have different meaning 
+    on browsers and server applications.
+3.	REST vocabulary is limited – There are not enough methods and response code to cater all the required requests 
+    and responses to communicate across all applications. HTTP methods don’t directly correlate to response codes, 
+    for example, GET has three response codes 200,201,202. This kind of complexity gives rise to errors and confusion.
+4.	REST API is difficult to debug – There are way too many places to check while debugging. One has to look at 7 different 
+    locations and piece it together to make sense and they are request method, request address, request method in request 
+    payload, message in request payload, response code, response code embedded in response payload and message in response payload.
+5.	REST API and HTML are tied – REST APIs mixes message content with the transmission channel which creates confusion. 
+    Intermingling of HTTP protocols with REST API makes it non-portable.
+
+
+Contrast between REST API and GraphQL:
+•	To retrieve data using REST API you have to hit server defined endpoints while in GraphQL you can send queries to get exactly 
+  the data you want using one query.
+•	Endpoint is the identity of the resource in REST while in GraphQL, identity of the object is different from how you fetch it.
+•	While doing a write in REST we use POST instead of GET while we change just a keyword in GraphQL
+•	Each request in REST calls exactly one route handler while in GraphQL a query can call resolvers to construct a nested response 
+  with multiple resources.  
+Benefits of REST over GraphQL – 
+1.	REST is more consistent and predictable over GraphQL by making use of HTTP request and status codes.
+2.	Resource relations are discovered while using the API because hypermedia allows it in RESTful.
+3.	REST implements caching while GraphQL doesn’t.
+Disadvantages of REST over GraphQL –
+1.	GraphQL reduces network hops as it retrieves the data in a single query itself.
+2.	GraphQL is WYSIWYG model which makes client code less error prone.
+3.	GraphQL is more useful as it provides a schema.
+
+
+Reference:
+i.	https://mmikowski.github.io/the_lie/
+ii.	https://dev-blog.apollodata.com/graphql-vs-rest-5d425123e34b
+iii.	https://www.infoq.com/news/2017/07/graphql-vs-rest

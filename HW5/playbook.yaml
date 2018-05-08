@@ -1,0 +1,47 @@
+---
+- hosts: node2
+  become: yes
+  vars:
+   - appDir: "/home/vagrant/App"
+   - repo: "https://github.com/CSC-DevOps/App"
+
+  tasks:
+  - name: apt-get update
+    apt:
+     update_cache: yes
+  - name: Install
+    apt: name={{ item }} state=latest
+    with_items:
+      - git
+      - nodejs-legacy
+      - npm
+
+  - name: Install forever
+    npm: name=forever global=yes state=present
+
+  - name: Create App directory
+    file: path={{ appDir }} state=directory
+
+  - name: Clone Repo
+    git: repo={{ repo }} dest={{ appDir }}
+
+  - name: Running npm install
+    npm: path={{ appDir }}
+
+  - name: Run app
+    command: forever start main.js 3000 chdir={{ appDir }}
+
+  - name: verify
+    apt: name="{{ item }}" state=latest
+    with_items:
+      - bash
+      - openssl
+      - openssh-client
+      - openssh-server
+
+  - name: Clean tmp
+    file: path=/tmp/ state=absent
+
+  - name: Create tmp
+    file: path=/tmp/ state=directory
+...
